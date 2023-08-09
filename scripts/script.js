@@ -1,7 +1,10 @@
 const password = document.querySelector("#password");
 const confirmPassword = document.querySelector("#confirmPassword");
+const userName = document.getElementById("firstName");
+const email = document.getElementById("email");
 const submit = document.querySelector(".login");
 const form = document.getElementById("form");
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -13,7 +16,7 @@ function validateInputs() {
     if (password.value == "" || password.value == null) {
         callError(password, 'You have to set a password!');
     } else {
-        callSucess(password);
+        callSuccess(password);
     }
 
     if (password.value != confirmPassword.value) {
@@ -21,8 +24,24 @@ function validateInputs() {
     } else if (password.value == "" || password.value == null) {
         callError(confirmPassword, '');
     } else {
-        callSucess(confirmPassword);
+        callSuccess(confirmPassword);
     }
+
+    if (userName.value == "" || userName.value == null) {
+        callError(userName, 'We need to know your name!');
+    } else {
+        callSuccess(userName);
+    }
+
+    if (email.value.match(emailRegex)) {
+        callSuccess(email);
+    } else {
+        callError(email, 'The email address is not valid!')
+    }
+
+    if (document.querySelectorAll('.button-success').length === 4) {
+        form.submit();
+    } 
 }
 
 function callError(selector, error) {
@@ -33,7 +52,7 @@ function callError(selector, error) {
     selector.classList.add("button-error");
 }
 
-function callSucess(selector) {
+function callSuccess(selector) {
     const errorLabel = selector.nextElementSibling;
     errorLabel.innerText = "";
     selector.classList.remove("button-error");
