@@ -5,11 +5,14 @@ const email = document.getElementById("email");
 const submit = document.querySelector(".login");
 const form = document.getElementById("form");
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const modeSwitch = document.querySelector(".mode-icon");
 
 form.addEventListener('submit', e => {
     e.preventDefault();
     validateInputs();
 })
+
+modeSwitch.addEventListener('click', modeToggle);
 
 function validateInputs() {
 
@@ -57,4 +60,16 @@ function callSuccess(selector) {
     errorLabel.innerText = "";
     selector.classList.remove("button-error");
     selector.classList.add("button-success");
+}
+
+function modeToggle(e) {
+    if (e.target.classList.contains("bi-brightness-high-fill")) {
+        e.target.classList.remove("bi-brightness-high-fill");
+        e.target.classList.add("bi-moon-fill");
+        document.querySelector("body").classList.add("dark");
+    } else {
+        e.target.classList.remove("bi-moon-fill");  
+        e.target.classList.add("bi-brightness-high-fill");   
+        document.querySelector("body").classList.remove("dark");
+    }
 }
